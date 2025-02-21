@@ -117,7 +117,7 @@ function App() {
           Enter JSON Input
         </h2>
         <textarea
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-900"
           rows="5"
           value={inputJson}
           onChange={handleInputChange}
@@ -125,7 +125,7 @@ function App() {
         />
         {error && <p className="text-red-500 mt-2">{error}</p>}
         <button
-          className="w-full mt-4 bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600 flex items-center justify-center"
+          className="w-full mt-4 bg-blue-900 text-white font-semibold py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
           onClick={handleSubmit}
           disabled={loading}
         >
@@ -146,7 +146,7 @@ function App() {
                 onClick={() => handleButtonClick(option.value)}
                 className={`px-3 sm:px-4 py-1 sm:py-2 rounded-md font-medium transition-colors ${
                   selectedOptions.includes(option.value)
-                    ? "bg-blue-500 text-white"
+                    ? "bg-blue-900 text-white"
                     : "bg-gray-200 text-gray-800 hover:bg-gray-300"
                 }`}
                 disabled={!response}
