@@ -22,14 +22,29 @@ function App() {
 
   const validateJson = (jsonString) => {
     try {
-      const correctedJsonString = jsonString.replace(/[“”]/g, '"');
-    const parsedJson = JSON.parse(correctedJsonString);
-  if (!parsedJson.data || !Array.isArray(parsedJson.data)) {
-        throw new Error('Invalid JSON format. Expected { "data": [...] }');
-      }
-      return parsedJson;
-    } catch (error) {
-      throw new Error("Invalid JSON format");
+    console.log("Original Input:", jsonString); // Debugging: Log original input
+
+    // Replace curly quotes with straight quotes
+    const correctedJsonString = jsonString.replace(/[“”]/g, '"');
+    console.log("Corrected Input:", correctedJsonString); // Debugging: Log corrected input
+
+    // Remove any hidden characters (e.g., zero-width spaces, non-breaking spaces)
+    const cleanedJsonString = correctedJsonString.replace(/[\u200B-\u200D\uFEFF]/g, '');
+    console.log("Cleaned Input:", cleanedJsonString); // Debugging: Log cleaned input
+
+    // Parse the JSON
+    const parsedJson = JSON.parse(cleanedJsonString);
+    console.log("Parsed JSON:", parsedJson); // Debugging: Log parsed JSON
+
+    // Validate the JSON structure
+    if (!parsedJson.data || !Array.isArray(parsedJson.data)) {
+      throw new Error('Invalid JSON format. Expected { "data": [...] }');
+    }
+
+    return parsedJson;
+  } catch (error) {
+    console.error("Validation Error:", error.message); // Debugging: Log the exact error
+    throw new Error("Invalid JSON format");
     }
   };
 
