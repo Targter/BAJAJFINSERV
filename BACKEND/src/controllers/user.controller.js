@@ -7,42 +7,41 @@ const userIdUpload = async (req, res) => {
         .status(400)
         .json({ error: 'Invalid input. "data" must be an array.' });
     }
-
-    // Separate numbers and alphabets
     const numbers = [];
     const alphabets = [];
 
     data.forEach((item) => {
-      if (/^\d+$/.test(item)) {
-        // If the item is a number, add to numbers array
-        numbers.push(item);
-      } else if (/^[A-Za-z]$/.test(item)) {
-        // If the item is a single alphabet, add to alphabets array
-        alphabets.push(item.toUpperCase()); // Convert to uppercase for case insensitivity
+      if (typeof item === "string") {
+        const characters = item.split("");
+        characters.forEach((char) => {
+          if (/^\d+$/.test(char)) {
+            numbers.push(char);
+          } else if (/^[A-Za-z]$/.test(char)) {
+            alphabets.push(char.toUpperCase()); // Convert to uppercase for case insensitivity
+          }
+        });
+      } else if (typeof item === "number") {
+        numbers.push(item.toString());
       }
     });
-
-    // Find the highest alphabet
+    const uniqueAlphabets = [...new Set(alphabets)];
     let highest_alphabet = [];
-    if (alphabets.length > 0) {
-      highest_alphabet = [alphabets.reduce((a, b) => (a > b ? a : b))];
+    if (uniqueAlphabets.length > 0) {
+      highest_alphabet = [uniqueAlphabets.reduce((a, b) => (a > b ? a : b))];
     }
-
-    // Prepare the response
     const response = {
       is_success: true,
       user_id: "ABHAYBANSAL_22BCS15306",
       email: "22BCS15306@cuchd.in",
       roll_number: "22BCS15306",
       numbers,
-      alphabets,
+      alphabets: uniqueAlphabets,
       highest_alphabet,
     };
 
-    // Send the response
     res.json({ data: response, success: true });
   } catch (error) {
-    res.json({ message: "Internal server error" }, { status: 500 });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
