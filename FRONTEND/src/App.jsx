@@ -22,8 +22,9 @@ function App() {
 
   const validateJson = (jsonString) => {
     try {
-      const parsedJson = JSON.parse(jsonString);
-      if (!parsedJson.data || !Array.isArray(parsedJson.data)) {
+      const correctedJsonString = jsonString.replace(/[“”]/g, '"');
+    const parsedJson = JSON.parse(correctedJsonString);
+  if (!parsedJson.data || !Array.isArray(parsedJson.data)) {
         throw new Error('Invalid JSON format. Expected { "data": [...] }');
       }
       return parsedJson;
