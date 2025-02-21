@@ -37,7 +37,7 @@ function App() {
       setLoading(true);
       const parsedJson = validateJson(inputJson);
       const apiResponse = await axios.post(
-        "https://bajajfinserv-teal.vercel.app/process",
+        "http://localhost:8080/process",
         parsedJson
       );
       console.log("apiRes", apiResponse.data.data);
